@@ -10,3 +10,15 @@
 [submodule "mods/protector"]
 	path = mods/protector
 	url = https://github.com/tenplus1/protector.git
+[submodule "mods/hunger"]
+	path = mods/hunger
+	url = https://github.com/BlockMen/hunger.git
+[submodule "mods/hud"]
+	path = mods/hud
+	url = https://github.com/BlockMen/hud.git
+[submodule "mods/potions"]
+	path = mods/potions
+	url = https://github.com/HybridDog/minetest-potions.git
+[submodule "mods/unified_inventory"]
+	path = mods/unified_inventory
+	url = https://github.com/minetest-technic/unified_inventory.git
