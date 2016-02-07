@@ -1,45 +1,44 @@
 -- mods/default/crafting.lua
 
 minetest.register_craft({
-	output = 'default:wood 4',
+	output = 'default:wood 8',
 	recipe = {
 		{'default:tree'},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:junglewood 4',
+	output = 'default:junglewood 8',
 	recipe = {
 		{'default:jungletree'},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:pine_wood 16',
+	output = 'default:pine_wood 8',
 	recipe = {
 		{'default:pine_tree'},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:acacia_wood 4',
+	output = 'default:acacia_wood 8',
 	recipe = {
 		{'default:acacia_tree'},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:stick 16',
+	output = 'default:aspen_wood 8',
 	recipe = {
-		{'group:wood'},
+		{'default:aspen_tree'},
 	}
 })
 
 minetest.register_craft({
-	output = 'default:fence_wood 2',
+	output = 'default:stick 8',
 	recipe = {
-		{'group:stick', 'group:stick', 'group:stick'},
-		{'group:stick', 'group:stick', 'group:stick'},
+		{'group:wood'},
 	}
 })
 

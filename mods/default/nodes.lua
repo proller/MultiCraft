@@ -78,6 +78,10 @@ default:acacia_wood
 default:acacia_leaves
 default:acacia_sapling
 
+default:aspen_tree
+default:aspen_wood
+default:aspen_leaves
+default:aspen_sapling
 Ores
 ----
 (1. In stone 2. Block)
@@ -147,6 +151,10 @@ default:sign_wall
 default:ladder
 
 default:fence_wood
+default:fence_acacia_wood
+default:fence_junglewood
+default:fence_pine_wood
+default:fence_aspen_wood
 
 default:glass
 default:obsidian_glass
@@ -769,6 +777,65 @@ minetest.register_node("default:acacia_sapling", {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
+minetest.register_node("default:aspen_tree", {
+	description = "Aspen Tree",
+	tiles = {"default_aspen_tree_top.png", "default_aspen_tree_top.png",
+		"default_aspen_tree.png"},
+	paramtype2 = "facedir",
+	is_ground_content = false,
+	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
+	sounds = default.node_sound_wood_defaults(),
+
+	on_place = minetest.rotate_node
+})
+
+minetest.register_node("default:aspen_wood", {
+	description = "Aspen Wood Planks",
+	tiles = {"default_aspen_wood.png"},
+	is_ground_content = false,
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
+	sounds = default.node_sound_wood_defaults(),
+})
+
+minetest.register_node("default:aspen_leaves", {
+	description = "Aspen Leaves",
+	drawtype = "allfaces_optional",
+	visual_scale = 1.3,
+	tiles = {"default_aspen_leaves.png"},
+	waving = 1,
+	paramtype = "light",
+	is_ground_content = false,
+	groups = {snappy = 3, leafdecay = 3, flammable = 2, leaves = 1},
+	drop = {
+		max_items = 1,
+		items = {
+			{items = {"default:aspen_sapling"}, rarity = 20},
+			{items = {"default:aspen_leaves"}}
+		}
+	},
+	sounds = default.node_sound_leaves_defaults(),
+
+	after_place_node = default.after_place_leaves,
+})
+
+minetest.register_node("default:aspen_sapling", {
+	description = "Aspen Tree Sapling",
+	drawtype = "plantlike",
+	visual_scale = 1.0,
+	tiles = {"default_aspen_sapling.png"},
+	inventory_image = "default_aspen_sapling.png",
+	wield_image = "default_aspen_sapling.png",
+	paramtype = "light",
+	sunlight_propagates = true,
+	walkable = false,
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.3, -0.5, -0.3, 0.3, 0.35, 0.3}
+	},
+	groups = {snappy = 2, dig_immediate = 3, flammable = 2,
+		attached_node = 1, sapling = 1},
+	sounds = default.node_sound_leaves_defaults(),
+})
 --
 -- Ores
 --
@@ -936,7 +1003,8 @@ minetest.register_node("default:dry_shrub", {
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
-	groups = {snappy = 3, flammable = 3, attached_node = 1, dig_immediate = 3, drop_by_liquid = 1},
+	groups = {snappy = 3, flammable = 3, attached_node = 1, dig_immediate = 3,
+				drop_by_liquid = 1, attached_node = 1},
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -1118,7 +1186,7 @@ minetest.register_node("default:water_source", {
 	liquid_alternative_flowing = "default:water_flowing",
 	liquid_alternative_source = "default:water_source",
 	liquid_viscosity = 1,
-	post_effect_color = {a = 120, r = 30, g = 60, b = 90},
+	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
 	groups = {water = 3, liquid = 3, puts_out_fire = 1},
 	groups = {water = 3, liquid = 3, puts_out_fire = 1, freeze = -1, melt = 105, liquid_drop = 1, weight = 1000, pressure = 32},
 	leveled = 8,
@@ -1168,7 +1236,7 @@ minetest.register_node("default:water_flowing", {
 	liquid_alternative_flowing = "default:water_flowing",
 	liquid_alternative_source = "default:water_source",
 	liquid_viscosity = 1,
-	post_effect_color = {a = 120, r = 30, g = 60, b = 90},
+	post_effect_color = {a = 103, r = 30, g = 60, b = 90},
 	groups = {water = 3, liquid = 3, puts_out_fire = 1,
 		not_in_creative_inventory = 1},
 
@@ -1224,7 +1292,7 @@ minetest.register_node("default:river_water_source", {
 	liquid_viscosity = 1,
 	liquid_renewable = false,
 	liquid_range = 2,
-	post_effect_color = {a = 120, r = 30, g = 76, b = 90},
+	post_effect_color = {a = 103, r = 30, g = 76, b = 90},
 	groups = {water = 3, liquid = 3, puts_out_fire = 1},
 	groups = {water = 3, liquid = 3, puts_out_fire = 1, freeze = -1, melt = 105, liquid_drop = 1, weight = 995, pressure = 32},
 	leveled = 4,
@@ -1276,7 +1344,7 @@ minetest.register_node("default:river_water_flowing", {
 	liquid_viscosity = 1,
 	liquid_renewable = false,
 	liquid_range = 2,
-	post_effect_color = {a = 120, r = 30, g = 76, b = 90},
+	post_effect_color = {a = 103, r = 30, g = 76, b = 90},
 	groups = {water = 3, liquid = 3, puts_out_fire = 1,
 		not_in_creative_inventory = 1},
 
@@ -1333,7 +1401,7 @@ minetest.register_node("default:lava_source", {
 	liquid_viscosity = 7,
 	liquid_renewable = false,
 	damage_per_second = 4 * 2,
-	post_effect_color = {a = 192, r = 255, g = 64, b = 0},
+	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
 	groups = {lava = 3, liquid = 2, hot = 3, igniter = 1},
 
 	groups = {lava = 3, liquid = 2, hot = 1200, igniter = 1,
@@ -1385,7 +1453,7 @@ minetest.register_node("default:lava_flowing", {
 	liquid_viscosity = 7,
 	liquid_renewable = false,
 	damage_per_second = 4 * 2,
-	post_effect_color = {a = 192, r = 255, g = 64, b = 0},
+	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
 	groups = {lava = 3, liquid = 2, hot = 3, igniter = 1,
 		not_in_creative_inventory = 1},
 
@@ -1452,7 +1520,7 @@ minetest.register_node("default:torch", {
 	sounds = default.node_sound_defaults(),
 
 	groups = {choppy = 2, dig_immediate = 3, flammable = 1, attached_node = 1,
-		hot = 30, wield_light = default.LIGHT_MAX-1, drop_by_liquid = 1},
+		hot = 39, wield_light = default.LIGHT_MAX-1, drop_by_liquid = 1},
 })
 
 
@@ -1743,26 +1811,45 @@ minetest.register_node("default:ladder", {
 	sounds = default.node_sound_wood_defaults(),
 })
 
-
-local fence_texture =
-	"default_fence_overlay.png^default_wood.png^default_fence_overlay.png^[makealpha:255,126,126"
-minetest.register_node("default:fence_wood", {
+default.register_fence("default:fence_wood", {
 	description = "Wooden Fence",
-	drawtype = "fencelike",
-	tiles = {"default_wood.png"},
-	inventory_image = fence_texture,
-	wield_image = fence_texture,
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	selection_box = {
-		type = "fixed",
-		fixed = {-1/7, -1/2, -1/7, 1/7, 1/2, 1/7},
-	},
+	texture = "default_wood.png",
+	material = "default:wood",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = default.node_sound_wood_defaults()
 })
 
+default.register_fence("default:fence_acacia_wood", {
+	description = "Acacia Fence",
+	texture = "default_acacia_wood.png",
+	material = "default:acacia_wood",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = default.node_sound_wood_defaults()
+})
+
+default.register_fence("default:fence_junglewood", {
+	description = "Junglewood Fence",
+	texture = "default_junglewood.png",
+	material = "default:junglewood",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = default.node_sound_wood_defaults()
+})
+
+default.register_fence("default:fence_pine_wood", {
+	description = "Pine Fence",
+	texture = "default_pine_wood.png",
+	material = "default:pine_wood",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = default.node_sound_wood_defaults()
+})
+
+default.register_fence("default:fence_aspen_wood", {
+	description = "Aspen Fence",
+	texture = "default_aspen_wood.png",
+	material = "default:aspen_wood",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = default.node_sound_wood_defaults()
+})
 
 minetest.register_node("default:glass", {
 	description = "Glass",
@@ -1831,7 +1918,7 @@ minetest.register_node("default:meselamp", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	is_ground_content = false,
-	groups = {cracky = 3, oddly_breakable_by_hand = 3, wield_light=default.LIGHT_MAX},
+	groups = {cracky = 3, oddly_breakable_by_hand = 3, wield_light = default.LIGHT_MAX, hot = 30},
 	sounds = default.node_sound_glass_defaults(),
 	light_source = default.LIGHT_MAX,
 })
