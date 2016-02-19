@@ -22,3 +22,6 @@
 [submodule "mods/unified_inventory"]
 	path = mods/unified_inventory
 	url = https://github.com/minetest-technic/unified_inventory.git
+[submodule "mods/dungeon_loot"]
+	path = mods/dungeon_loot
+	url = https://github.com/BlockMen/dungeon_loot.git
