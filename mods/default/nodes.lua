@@ -365,7 +365,7 @@ minetest.register_node("default:dirt_with_snow", {
 	groups = {crumbly = 3, soil = 1, slippery = 70, melt = 2},
 	drop = 'default:dirt',
 	sounds = default.node_sound_dirt_defaults({
-		footstep = {name = "default_snow_footstep", gain = 0.25},
+		footstep = {name = "default_snow_footstep", gain = 0.15},
 	}),
 	drowning = 1,
 	melt = "default:dirt",
@@ -380,8 +380,6 @@ minetest.register_node("default:dirt_dry", {
 	sounds = default.node_sound_dirt_defaults(),
 	melt = "default:sand",
 })
-
-
 
 minetest.register_node("default:sand", {
 	description = "Sand",
@@ -458,8 +456,9 @@ minetest.register_node("default:snow", {
 	},
 	groups = {crumbly = 3, falling_node = 1, puts_out_fire = 1, melt = 1, float = 1, slippery = 75},
 	sounds = default.node_sound_dirt_defaults({
-		footstep = {name = "default_snow_footstep", gain = 0.25},
-		dug = {name = "default_snow_footstep", gain = 0.75},
+		footstep = {name = "default_snow_footstep", gain = 0.15},
+		dug = {name = "default_snow_footstep", gain = 0.2},
+		dig = {name = "default_snow_footstep", gain = 0.2}
 	}),
 
 	on_construct = function(pos)
@@ -478,12 +477,12 @@ minetest.register_node("default:snowblock", {
 	tiles = {"default_snow.png"},
 	groups = {crumbly = 3, puts_out_fire = 1, melt = 2, slippery = 80},
 	sounds = default.node_sound_dirt_defaults({
-		footstep = {name = "default_snow_footstep", gain = 0.25},
-		dug = {name = "default_snow_footstep", gain = 0.75},
+		footstep = {name = "default_snow_footstep", gain = 0.15},
+		dug = {name = "default_snow_footstep", gain = 0.2},
+		dig = {name = "default_snow_footstep", gain = 0.2}
 	}),
 	melt = "default:water_source",
 })
-
 
 minetest.register_node("default:ice", {
 	description = "Ice",
@@ -964,10 +963,6 @@ minetest.register_node("default:cactus", {
 	groups = {snappy = 1, choppy = 3, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
 	on_place = minetest.rotate_node,
-
-	after_dig_node = function(pos, node, metadata, digger)
-		default.dig_up(pos, node, digger)
-	end,
 })
 
 minetest.register_node("default:papyrus", {
@@ -1582,11 +1577,13 @@ minetest.register_node("default:chest", {
 	end,
     on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		minetest.log("action", player:get_player_name() ..
-			" moves stuff to chest at " .. minetest.pos_to_string(pos))
+			" moves " .. stack:get_name() ..
+			" to chest at " .. minetest.pos_to_string(pos))
 	end,
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		minetest.log("action", player:get_player_name() ..
-			" takes stuff from chest at " .. minetest.pos_to_string(pos))
+			" takes " .. stack:get_name() ..
+			" from chest at " .. minetest.pos_to_string(pos))
 	end,
 })
 
@@ -1642,11 +1639,13 @@ minetest.register_node("default:chest_locked", {
 	end,
     on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		minetest.log("action", player:get_player_name() ..
-			" moves stuff to locked chest at " .. minetest.pos_to_string(pos))
+			" moves " .. stack:get_name() ..
+			" to locked chest at " .. minetest.pos_to_string(pos))
 	end,
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		minetest.log("action", player:get_player_name() ..
-			" takes stuff from locked chest at " .. minetest.pos_to_string(pos))
+			" takes " .. stack:get_name()  ..
+			" from locked chest at " .. minetest.pos_to_string(pos))
 	end,
 	on_rightclick = function(pos, node, clicker)
 		local meta = minetest.get_meta(pos)
