@@ -460,6 +460,7 @@ minetest.register_node("default:snow", {
 	wield_image = "default_snowball.png",
 	paramtype = "light",
 	buildable_to = true,
+	floodable = true,
 	drawtype = "nodebox",
 	node_box = {
 		type = "leveled",
@@ -505,6 +506,8 @@ minetest.register_node("default:ice", {
 	groups = {cracky = 3, puts_out_fire = 1, melt = 3, slippery = 90},
 	sounds = default.node_sound_glass_defaults(),
 	melt = "default:water_source",
+	drawtype = "glasslike",
+	use_texture_alpha = true,
 })
 
 --
@@ -1032,7 +1035,8 @@ minetest.register_node("default:junglegrass", {
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
-	groups = {snappy = 3, flora = 1, attached_node = 1, dig_immediate = 3, drop_by_liquid = 1, melt = 50},
+	groups = {snappy = 3, flora = 1, attached_node = 1, grass = 1,
+		dig_immediate = 3, drop_by_liquid = 1, melt = 50, },
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -1054,7 +1058,8 @@ minetest.register_node("default:grass_1", {
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
-	groups = {snappy = 3, flora = 1, attached_node = 1, dig_immediate = 3, drop_by_liquid = 1, melt = 40},
+	groups = {snappy = 3, flora = 1, attached_node = 1, grass = 1, 
+		dig_immediate = 3, drop_by_liquid = 1, melt = 40, },
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -1085,8 +1090,8 @@ for i = 2, 5 do
 		buildable_to = true,
 		drop = "default:grass_1",
 		groups = {snappy = 3, flora = 1, attached_node = 1,
-			not_in_creative_inventory = 1,
-			dig_immediate = 3, drop_by_liquid = 1, melt = 40},
+			not_in_creative_inventory = 1, grass = 1,
+			dig_immediate = 3, drop_by_liquid = 1, melt = 40, },
 		sounds = default.node_sound_leaves_defaults(),
 		selection_box = {
 			type = "fixed",
@@ -1109,7 +1114,8 @@ minetest.register_node("default:dry_grass_1", {
 	walkable = false,
 	buildable_to = true,
 	groups = {snappy = 3, flammable = 3, flora = 1,
-		attached_node = 1, dig_immediate = 3, drop_by_liquid = 1},
+		attached_node = 1, dry_grass = 1 ,
+		dig_immediate = 3, drop_by_liquid = 1, },
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -1137,8 +1143,8 @@ for i = 2, 5 do
 		sunlight_propagates = true,
 		walkable = false,
 		buildable_to = true,
-		groups = {snappy = 3, flammable = 3, flora = 1,
-			attached_node = 1, not_in_creative_inventory=1,
+		groups = {snappy = 3, flammable = 3, flora = 1, attached_node = 1,
+			not_in_creative_inventory=1, dry_grass = 1,
 			dig_immediate = 3, drop_by_liquid = 1},
 		drop = "default:dry_grass_1",
 		sounds = default.node_sound_leaves_defaults(),
@@ -1896,7 +1902,7 @@ minetest.register_node("default:obsidian_glass", {
 	is_ground_content = false,
 	sunlight_propagates = true,
 	sounds = default.node_sound_glass_defaults(),
-	groups = {cracky = 3, oddly_breakable_by_hand = 3},
+	groups = {cracky = 3},
 })
 
 
