@@ -253,7 +253,7 @@ minetest.register_node("default:desert_stonebrick", {
 minetest.register_node("default:sandstone", {
 	description = "Sandstone",
 	tiles = {"default_sandstone.png"},
-	groups = {crumbly = 2, cracky = 3, melt = 3000},
+	groups = {crumbly = 1, cracky = 3, melt = 3000, },
 	sounds = default.node_sound_stone_defaults(),
 	melt = "default:lava_source",
 })
@@ -420,17 +420,14 @@ minetest.register_node("default:gravel", {
 	description = "Gravel",
 	tiles = {"default_gravel.png"},
 	groups = {crumbly = 2, falling_node = 1},
-	sounds = default.node_sound_dirt_defaults({
-		footstep = {name = "default_gravel_footstep", gain = 0.5},
-		dug = {name = "default_gravel_footstep", gain = 1.0},
-	}),
 
-	groups = {crumbly=2, falling_node=1, liquid_drop=flowing_sand_liquid_drop, weight=2000},
+	groups = {crumbly = 2, falling_node = 1, liquid_drop = flowing_sand_liquid_drop, weight = 2000},
 	leveled = flowing_sand_leveled,
 	liquidtype = flowing_sand_type,
 	paramtype2 = flowing_sand_paramtype2,
 	drowning = 1,
 
+	sounds = default.node_sound_gravel_defaults(),
 	drop = {
 		max_items = 1,
 		items = {
@@ -1616,6 +1613,13 @@ minetest.register_node("default:chest", {
 			" takes " .. stack:get_name() ..
 			" from chest at " .. minetest.pos_to_string(pos))
 	end,
+	on_blast = function(pos)
+		local drops = {}
+		default.get_inventory_drops(pos, "main", drops)
+		drops[#drops+1] = "default:chest"
+		minetest.remove_node(pos)
+		return drops
+	end,
 })
 
 minetest.register_node("default:chest_locked", {
@@ -1738,6 +1742,13 @@ minetest.register_node("default:bookshelf", {
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		minetest.log("action", player:get_player_name() ..
 			" takes stuff from bookshelf at " .. minetest.pos_to_string(pos))
+	end,
+	on_blast = function(pos)
+		local drops = {}
+		default.get_inventory_drops(pos, "books", drops)
+		drops[#drops+1] = "default:bookshelf"
+		minetest.remove_node(pos)
+		return drops
 	end,
 })
 
