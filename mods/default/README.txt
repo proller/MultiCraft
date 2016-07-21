@@ -51,13 +51,11 @@ RealBadAngel's animated water (WTFPL):
   default_water_flowing_animated.png
 
 VanessaE (WTFPL):
-  default_nc_back.png
-  default_nc_front.png
-  default_nc_rb.png
-  default_nc_side.png
   default_desert_sand.png
   default_desert_stone.png
   default_sand.png
+  default_mese_crystal.png
+  default_mese_crystal_fragment.png
 
 Calinou (CC BY-SA):
   default_brick.png
@@ -112,6 +110,10 @@ paramat (CC BY-SA 3.0):
   default_obsidian_brick.png
   default_stone_brick.png
   default_desert_stone_brick.png
+  default_sandstone_block.png
+  default_obsidian_block.png
+  default_stone_block.png
+  default_desert_stone_block.png
   default_river_water.png
   default_river_water_source_animated.png
   default_river_water_flowing_animated.png
@@ -121,6 +123,7 @@ paramat (CC BY-SA 3.0):
   default_grass.png
   default_grass_side.png
   default_snow_side.png
+  default_mese_block.png
 
 brunob.santos (CC BY-SA 4.0):
   default_desert_cobble.png

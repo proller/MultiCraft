@@ -19,17 +19,21 @@ Stone
 default:stone
 default:cobble
 default:stonebrick
+default:stone_block
 default:mossycobble
 
 default:desert_stone
 default:desert_cobble
 default:desert_stonebrick
+default:desert_stone_block
 
 default:sandstone
 default:sandstonebrick
+default:sandstone_block
 
 default:obsidian
 default:obsidianbrick
+default:obsidian_block
 
 Soft / Non-Stone
 ----------------
@@ -174,8 +178,6 @@ Misc
 ----
 
 default:cloud
-default:nyancat
-default:nyancat_rainbow
 
 --]]
 
@@ -204,11 +206,21 @@ minetest.register_node("default:cobble", {
 
 minetest.register_node("default:stonebrick", {
 	description = "Stone Brick",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_stone_brick.png"},
 	is_ground_content = false,
 	groups = {cracky = 2, stone = 1, melt = 3000},
 	sounds = default.node_sound_stone_defaults(),
 	melt = "default:lava_source",
+})
+
+minetest.register_node("default:stone_block", {
+	description = "Stone Block",
+	tiles = {"default_stone_block.png"},
+	is_ground_content = false,
+	groups = {cracky = 2, stone = 1},
+	sounds = default.node_sound_stone_defaults(),
 })
 
 minetest.register_node("default:mossycobble", {
@@ -242,11 +254,21 @@ minetest.register_node("default:desert_cobble", {
 
 minetest.register_node("default:desert_stonebrick", {
 	description = "Desert Stone Brick",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_desert_stone_brick.png"},
 	is_ground_content = false,
 	groups = {cracky = 2, stone = 1, melt = 3000},
 	sounds = default.node_sound_stone_defaults(),
 	melt = "default:lava_source",
+})
+
+minetest.register_node("default:desert_stone_block", {
+	description = "Desert Stone Block",
+	tiles = {"default_desert_stone_block.png"},
+	is_ground_content = false,
+	groups = {cracky = 2, stone = 1},
+	sounds = default.node_sound_stone_defaults(),
 })
 
 
@@ -260,11 +282,21 @@ minetest.register_node("default:sandstone", {
 
 minetest.register_node("default:sandstonebrick", {
 	description = "Sandstone Brick",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_sandstone_brick.png"},
 	is_ground_content = false,
 	groups = {cracky = 2, melt = 3000},
 	sounds = default.node_sound_stone_defaults(),
 	melt = "default:lava_source",
+})
+
+minetest.register_node("default:sandstone_block", {
+	description = "Sandstone Block",
+	tiles = {"default_sandstone_block.png"},
+	is_ground_content = false,
+	groups = {cracky = 2},
+	sounds = default.node_sound_stone_defaults(),
 })
 
 
@@ -278,11 +310,21 @@ minetest.register_node("default:obsidian", {
 
 minetest.register_node("default:obsidianbrick", {
 	description = "Obsidian Brick",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_obsidian_brick.png"},
 	is_ground_content = false,
 	sounds = default.node_sound_stone_defaults(),
 	groups = {cracky = 1, level = 2, melt = 5000},
 	melt = "default:lava_source",
+})
+
+minetest.register_node("default:obsidian_block", {
+	description = "Obsidian Block",
+	tiles = {"default_obsidian_block.png"},
+	is_ground_content = false,
+	sounds = default.node_sound_stone_defaults(),
+	groups = {cracky = 1, level = 2},
 })
 
 --
@@ -524,6 +566,8 @@ minetest.register_node("default:tree", {
 
 minetest.register_node("default:wood", {
 	description = "Wooden Planks",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_wood.png"},
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
@@ -540,6 +584,10 @@ minetest.register_node("default:sapling", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+	on_timer = default.grow_sapling,
+	on_construct = function(pos)
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
+	end,
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.3, -0.5, -0.3, 0.3, 0.35, 0.3}
@@ -620,6 +668,8 @@ minetest.register_node("default:jungletree", {
 
 minetest.register_node("default:junglewood", {
 	description = "Junglewood Planks",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_junglewood.png"},
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
@@ -658,6 +708,10 @@ minetest.register_node("default:junglesapling", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+	on_timer = default.grow_sapling,
+	on_construct = function(pos)
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
+	end,
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.3, -0.5, -0.3, 0.3, 0.35, 0.3}
@@ -682,6 +736,8 @@ minetest.register_node("default:pine_tree", {
 
 minetest.register_node("default:pine_wood", {
 	description = "Pine Wood Planks",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_pine_wood.png"},
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
@@ -719,6 +775,10 @@ minetest.register_node("default:pine_sapling", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+	on_timer = default.grow_sapling,
+	on_construct = function(pos)
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
+	end,
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.3, -0.5, -0.3, 0.3, 0.35, 0.3}
@@ -743,6 +803,8 @@ minetest.register_node("default:acacia_tree", {
 
 minetest.register_node("default:acacia_wood", {
 	description = "Acacia Wood Planks",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_acacia_wood.png"},
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
@@ -780,6 +842,10 @@ minetest.register_node("default:acacia_sapling", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+	on_timer = default.grow_sapling,
+	on_construct = function(pos)
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
+	end,
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.3, -0.5, -0.3, 0.3, 0.35, 0.3}
@@ -803,6 +869,8 @@ minetest.register_node("default:aspen_tree", {
 
 minetest.register_node("default:aspen_wood", {
 	description = "Aspen Wood Planks",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_aspen_wood.png"},
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
@@ -840,6 +908,10 @@ minetest.register_node("default:aspen_sapling", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+	on_timer = default.grow_sapling,
+	on_construct = function(pos)
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
+	end,
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.3, -0.5, -0.3, 0.3, 0.35, 0.3}
@@ -1413,10 +1485,10 @@ minetest.register_node("default:lava_source", {
 	liquid_renewable = false,
 	damage_per_second = 4 * 2,
 	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
-	groups = {lava = 3, liquid = 2, hot = 3, igniter = 1},
+	groups = {lava = 3, liquid = 2, igniter = 1},
 
-	groups = {lava = 3, liquid = 2, hot = 1200, igniter = 1,
-		wield_light = 5, liquid_drop = 1, weight = 2000, pressure = 32},
+	groups = {lava = 3, liquid = 2, igniter = 1,
+		hot = 1200, wield_light = 5, liquid_drop = 1, weight = 2000, pressure = 32},
 	paramtype2 = "leveled",
 	leveled = 4,
 	freeze = "default:obsidian",
@@ -1464,11 +1536,9 @@ minetest.register_node("default:lava_flowing", {
 	liquid_renewable = false,
 	damage_per_second = 4 * 2,
 	post_effect_color = {a = 191, r = 255, g = 64, b = 0},
-	groups = {lava = 3, liquid = 2, hot = 3, igniter = 1,
-		not_in_creative_inventory = 1},
-
-	groups = {lava = 3, liquid = 2, hot = 700, igniter = 1,
+	groups = {lava = 3, liquid = 2, igniter = 1,
 		not_in_creative_inventory = 1,
+		hot = 700,
 		wield_light = 2, liquid_drop = 1, weight = 2000},
 	paramtype2 = "leveled",
 	leveled = 4,
@@ -1589,7 +1659,6 @@ minetest.register_node("default:chest", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", chest_formspec)
-		meta:set_string("infotext", "Chest")
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
 	end,
@@ -1640,7 +1709,6 @@ minetest.register_node("default:chest_locked", {
 	end,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("infotext", "Locked Chest")
 		meta:set_string("owner", "")
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8 * 4)
@@ -1682,7 +1750,7 @@ minetest.register_node("default:chest_locked", {
 			" takes " .. stack:get_name()  ..
 			" from locked chest at " .. minetest.pos_to_string(pos))
 	end,
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
 		if has_locked_chest_privilege(meta, clicker) then
 			minetest.show_formspec(
@@ -1691,6 +1759,7 @@ minetest.register_node("default:chest_locked", {
 				get_locked_chest_formspec(pos)
 			)
 		end
+		return itemstack
 	end,
 	on_blast = function() end,
 })
@@ -1710,7 +1779,9 @@ local bookshelf_formspec =
 
 minetest.register_node("default:bookshelf", {
 	description = "Bookshelf",
-	tiles = {"default_wood.png", "default_wood.png", "default_bookshelf.png"},
+	tiles = {"default_wood.png", "default_wood.png", "default_wood.png",
+		"default_wood.png", "default_bookshelf.png", "default_bookshelf.png"},
+	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {choppy = 3, oddly_breakable_by_hand = 2, flammable = 3},
 	sounds = default.node_sound_wood_defaults(),
@@ -1778,7 +1849,6 @@ local function register_sign(material, desc, def)
 			--local n = minetest.get_node(pos)
 			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", "field[text;;${text}]")
-			meta:set_string("infotext", "\"\"")
 		end,
 		on_receive_fields = function(pos, formname, fields, sender)
 			--print("Sign at "..minetest.pos_to_string(pos).." got "..dump(fields))
@@ -1934,13 +2004,15 @@ minetest.register_node("default:rail", {
                 -- but how to specify the dimensions for curved and sideways rails?
                 fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
 	},
-	groups = {bendy = 2, dig_immediate = 2, attached_node = 1,
+	groups = {dig_immediate = 2, attached_node = 1,
 		connect_to_raillike = minetest.raillike_group("rail")},
 })
 
 
 minetest.register_node("default:brick", {
 	description = "Brick Block",
+	paramtype2 = "facedir",
+	place_param2 = 0,
 	tiles = {"default_brick.png"},
 	is_ground_content = false,
 	groups = {cracky = 3, melt = 3500},
@@ -1973,27 +2045,3 @@ minetest.register_node("default:cloud", {
 	sounds = default.node_sound_defaults(),
 	groups = {not_in_creative_inventory = 1},
 })
-
-minetest.register_node("default:nyancat", {
-	description = "Nyan Cat",
-	tiles = {"default_nc_side.png", "default_nc_side.png", "default_nc_side.png",
-		"default_nc_side.png", "default_nc_back.png", "default_nc_front.png"},
-	paramtype2 = "facedir",
-	groups = {cracky = 2},
-	is_ground_content = false,
-	legacy_facedir_simple = true,
-	sounds = default.node_sound_defaults(),
-})
-
-minetest.register_node("default:nyancat_rainbow", {
-	description = "Nyan Cat Rainbow",
-	tiles = {
-		"default_nc_rb.png^[transformR90", "default_nc_rb.png^[transformR90",
-		"default_nc_rb.png", "default_nc_rb.png"
-	},
-	paramtype2 = "facedir",
-	groups = {cracky = 2},
-	is_ground_content = false,
-	sounds = default.node_sound_defaults(),
-})
-

@@ -21,7 +21,7 @@ minetest.register_node("flowers:moonflower_closed", {
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
-		fixed = { -0.15, -0.5, -0.15, 0.15, 0.2, 0.15 },
+		fixed = { -0.15, -0.5, -0.15, 0.15, 0.1, 0.15 },
 	},
 	visual_scale = 0.6,
 })
@@ -42,29 +42,32 @@ minetest.register_node("flowers:moonflower_open", {
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
-		fixed = { -0.15, -0.5, -0.15, 0.15, 0.2, 0.15 },
+		fixed = { -0.15, -0.5, -0.15, 0.15, 0.1, 0.15 },
 	},
 	visual_scale = 0.6,
 })
 
-set_moonflower = function (pos)
-	-- choose the appropriate form of the moon flower
-	if (minetest.get_node_light(pos, 0.5) == default.LIGHT_SUN)
-	and ((minetest.get_timeofday() < OPEN_TIME_START) or (minetest.get_timeofday() > OPEN_TIME_END)) then
-		minetest.add_node(pos, { name = "flowers:moonflower_open" })
-	else
-		minetest.add_node(pos, { name = "flowers:moonflower_closed" })
+set_moonflower = function (pos, node)
+		local tod = minetest.get_timeofday()
+		-- choose the appropriate form of the moon flower
+		if node.name == "flowers:moonflower_open"
+			and (tod > OPEN_TIME_START and tod < OPEN_TIME_END) then
+				minetest.swap_node(pos, { name = "flowers:moonflower_closed" })
+		elseif node.name == "flowers:moonflower_closed"
+			and (tod > OPEN_TIME_END or tod < OPEN_TIME_START)
+			and minetest.get_node_light(pos, 0.5) == default.LIGHT_SUN then
+				minetest.swap_node(pos, { name = "flowers:moonflower_open" })
+		end
 	end
-end
 
 minetest.register_abm({
 	nodenames = { "flowers:moonflower_closed", "flowers:moonflower_open" },
 	interval = OPEN_CHECK,
 	chance = 1,
-
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		set_moonflower(pos)
+		set_moonflower(pos, node)
 	end
+
 })
 
 minetest.register_on_generated(function(minp, maxp, seed)
@@ -82,7 +85,7 @@ for attempts = 0, SPAWN_ATTEMPTS do
 
 		if (node_here.name == "default:dirt_with_grass") and (node_top.name == "air") then
 			if (math.random() <= SPAWN_PROBABILITY) then
-				set_moonflower(pos_top)
+				set_moonflower(pos_top, node_top)
 			end
 			break
 		end
