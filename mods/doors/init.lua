@@ -1,11 +1,3 @@
---[[
-
-Copyright (C) 2012 PilzAdam
-  modified by BlockMen (added sounds, glassdoors[glass, obsidian glass], trapdoor)
-Copyright (C) 2015 - Auke Kok <sofar@foo-projects.org>
-
---]]
-
 -- our API object
 doors = {}
 
@@ -185,7 +177,7 @@ end
 local function on_place_node(place_to, newnode,
 	placer, oldnode, itemstack, pointed_thing)
 	-- Run script hook
-	for _, callback in ipairs(core.registered_on_placenodes) do
+	for _, callback in ipairs(minetest.registered_on_placenodes) do
 		-- Deepcopy pos, node and pointed_thing because callback can modify them
 		local place_to_copy = {x = place_to.x, y = place_to.y, z = place_to.z}
 		local newnode_copy =
@@ -201,6 +193,14 @@ local function on_place_node(place_to, newnode,
 		callback(place_to_copy, newnode_copy, placer,
 			oldnode_copy, itemstack, pointed_thing_copy)
 	end
+end
+
+local function can_dig_door(pos, digger)
+	local digger_name = digger and digger:get_player_name()
+	if digger_name and minetest.get_player_privs(digger_name).protection_bypass then
+		return true
+	end
+	return minetest.get_meta(pos):get_string("doors_owner") == digger_name
 end
 
 function doors.register(name, def)
@@ -273,8 +273,10 @@ function doors.register(name, def)
 			end
 
 			local above = {x = pos.x, y = pos.y + 1, z = pos.z}
-			if not minetest.registered_nodes[
-				minetest.get_node(above).name].buildable_to then
+			local top_node = minetest.get_node_or_nil(above)
+			local topdef = top_node and minetest.registered_nodes[top_node.name]
+
+			if not topdef or not topdef.buildable_to then
 				return itemstack
 			end
 
@@ -336,21 +338,6 @@ function doors.register(name, def)
 	end
 	def.recipe = nil
 
-	local can_dig = function(pos, digger)
-		if not def.protected then
-			return true
-		end
-		if minetest.check_player_privs(digger, "protection_bypass") then
-			return true
-		end
-		local meta = minetest.get_meta(pos)
-		local owner_name
-		if digger then
-			owner_name = digger:get_player_name()
-		end
-		return meta:get_string("doors_owner") == owner_name
-	end
-
 	if not def.sounds then
 		def.sounds = default.node_sound_wood_defaults()
 	end
@@ -379,14 +366,10 @@ function doors.register(name, def)
 		minetest.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
 		nodeupdate({x = pos.x, y = pos.y + 1, z = pos.z})
 	end
-	def.can_dig = function(pos, player)
-		return can_dig(pos, player)
-	end
-	def.on_rotate = function(pos, node, user, mode, new_param2)
-		return false
-	end
+	def.on_rotate = screwdriver and screwdriver.rotate_simple or false
 
 	if def.protected then
+		def.can_dig = can_dig_door
 		def.on_blast = function() end
 	else
 		def.on_blast = function(pos, intensity)
@@ -540,16 +523,6 @@ function doors.register_trapdoor(name, def)
 	local name_closed = name
 	local name_opened = name.."_open"
 
-	local function check_player_priv(pos, player)
-		if not def.protected or
-				minetest.check_player_privs(player, "protection_bypass") then
-			return true
-		end
-		local meta = minetest.get_meta(pos)
-		local player_name = player and player:get_player_name()
-		return meta:get_string("doors_owner") == player_name
-	end
-
 	def.on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		_doors.trapdoor_toggle(pos, node, clicker)
 		return itemstack
@@ -560,9 +533,9 @@ function doors.register_trapdoor(name, def)
 	def.paramtype = "light"
 	def.paramtype2 = "facedir"
 	def.is_ground_content = false
-	def.can_dig = check_player_priv
 
 	if def.protected then
+		def.can_dig = can_dig_door
 		def.after_place_node = function(pos, placer, itemstack, pointed_thing)
 			local pn = placer:get_player_name()
 			local meta = minetest.get_meta(pos)
@@ -603,8 +576,10 @@ function doors.register_trapdoor(name, def)
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, -6/16, 0.5}
 	}
-	def_closed.tiles = {def.tile_front, def.tile_front, def.tile_side, def.tile_side,
-		def.tile_side, def.tile_side}
+	def_closed.tiles = {def.tile_front,
+			def.tile_front .. '^[transformFY',
+			def.tile_side, def.tile_side,
+			def.tile_side, def.tile_side}
 
 	def_opened.node_box = {
 		type = "fixed",
@@ -617,7 +592,8 @@ function doors.register_trapdoor(name, def)
 	def_opened.tiles = {def.tile_side, def.tile_side,
 			def.tile_side .. '^[transform3',
 			def.tile_side .. '^[transform1',
-			def.tile_front, def.tile_front}
+			def.tile_front .. '^[transform46',
+			def.tile_front .. '^[transform6'}
 
 	def_opened.drop = name_closed
 	def_opened.groups.not_in_creative_inventory = 1
@@ -720,7 +696,7 @@ function doors.register_fencegate(name, def)
 	fence_open.collision_box = {
 		type = "fixed",
 		fixed = {{-1/2, -1/2, -1/4, -3/8, 1/2, 1/4},
-			{-5/8, -3/8, -14/16, -3/8, 3/8, 0}},
+			{-5/8, -3/8, -1/2, -3/8, 3/8, 0}},
 	}
 
 	minetest.register_node(":" .. name .. "_closed", fence_closed)
@@ -760,12 +736,12 @@ doors.register_fencegate("doors:gate_pine_wood", {
 	description = "Pine Fence Gate",
 	texture = "default_pine_wood.png",
 	material = "default:pine_wood",
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
+	groups = {choppy = 3, oddly_breakable_by_hand = 2, flammable = 3}
 })
 
 doors.register_fencegate("doors:gate_aspen_wood", {
 	description = "Aspen Fence Gate",
 	texture = "default_aspen_wood.png",
 	material = "default:aspen_wood",
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
+	groups = {choppy = 3, oddly_breakable_by_hand = 2, flammable = 3}
 })

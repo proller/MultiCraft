@@ -224,6 +224,7 @@ end
 -- Extinguish all flames quickly with water, snow, ice
 
 minetest.register_abm({
+	label = "Extinguish flame",
 	nodenames = {"fire:basic_flame", "fire:permanent_flame"},
 	neighbors = {"group:puts_out_fire"},
 	interval = 3,
@@ -237,13 +238,21 @@ minetest.register_abm({
 })
 
 
--- Enable the following ABMs according to 'disable fire' setting
+-- Enable the following ABMs according to 'enable fire' setting
 
-if minetest.setting_getbool("disable_fire") then
+local fire_enabled = minetest.setting_getbool("enable_fire")
+if fire_enabled == nil then
+	-- New setting not specified, check for old setting.
+	-- If old setting is also not specified, 'not nil' is true.
+	fire_enabled = not minetest.setting_getbool("disable_fire")
+end
+
+if not fire_enabled then
 
 	-- Remove basic flames only
 
 	minetest.register_abm({
+		label = "Remove disabled fire",
 		nodenames = {"fire:basic_flame"},
 		interval = 7,
 		chance = 1,
@@ -256,11 +265,12 @@ if minetest.setting_getbool("disable_fire") then
 		end,
 	})
 
-else
+else -- Fire enabled
 
 	-- Ignite neighboring nodes, add basic flames
 
 	minetest.register_abm({
+		label = "Ignite flame",
 		nodenames = {"group:flammable"},
 		neighbors = {"group:igniter"},
 		interval = 7,
@@ -289,6 +299,7 @@ else
 	-- Remove flammable nodes
 
 	minetest.register_abm({
+		label = "Remove flammable nodes",
 		nodenames = {"fire:basic_flame"},
 		neighbors = "group:flammable",
 		interval = 5,
@@ -369,7 +380,7 @@ minetest.register_abm({
 		local p = minetest.find_node_near(p0, 1, {"air"})
 		if p then
 			minetest.set_node(p, {name="fire:basic_flame"})
-			fire.on_flame_add_at(p)
+			fire.update_sounds_around(p)
 		end
 	end,
 })

@@ -1,28 +1,18 @@
 Freeminer mod: default
 ==========================
+See license.txt for license information.
 
-License of source code:
------------------------
-Copyright (C) 2011-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
+Authors of source code
+----------------------
+Originally by celeron55, Perttu Ahola <celeron55@gmail.com> (LGPL 2.1)
+Various Minetest developers and contributors (LGPL 2.1)
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 2.1 of the License, or
-(at your option) any later version.
-
-http://www.gnu.org/licenses/lgpl-2.1.html
-
-License of media (textures and sounds)
---------------------------------------
-Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
-http://creativecommons.org/licenses/by-sa/3.0/
-
-Authors of media files
------------------------
+Authors of media (textures, models and sounds)
+----------------------------------------------
 Everything not listed in here:
-Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
+celeron55, Perttu Ahola <celeron55@gmail.com> (CC BY-SA 3.0)
 
-Cisoun's WTFPL texture pack:
+Cisoun's texture pack (CC BY-SA 3.0):
   default_jungletree.png
   default_lava.png
   default_leaves.png
@@ -32,44 +22,44 @@ Cisoun's WTFPL texture pack:
   default_tree_top.png
   default_water.png
 
-Cisoun's conifers mod (WTFPL):
+Cisoun's conifers mod (CC BY-SA 3.0):
   default_pine_needles.png
 
-Originating from G4JC's Almost MC Texture Pack:
+Originating from G4JC's Almost MC Texture Pack (CC BY-SA 3.0):
   default_torch.png
   default_torch_on_ceiling.png
   default_torch_on_floor.png
 
-VanessaE's animated torches (WTFPL):
+VanessaE's animated torches (CC BY-SA 3.0):
   default_torch_animated.png
   default_torch_on_ceiling_animated.png
   default_torch_on_floor_animated.png
   default_torch_on_floor.png
 
-RealBadAngel's animated water (WTFPL):
+RealBadAngel's animated water (CC BY-SA 3.0):
   default_water_source_animated.png
   default_water_flowing_animated.png
 
-VanessaE (WTFPL):
+VanessaE (CC BY-SA 3.0):
   default_desert_sand.png
   default_desert_stone.png
   default_sand.png
   default_mese_crystal.png
   default_mese_crystal_fragment.png
 
-Calinou (CC BY-SA):
+Calinou (CC BY-SA 3.0):
   default_brick.png
   default_papyrus.png
   default_mineral_copper.png
   default_glass_detail.png
 
-MirceaKitsune (WTFPL):
+MirceaKitsune (CC BY-SA 3.0):
   character.x
 
 Jordach (CC BY-SA 3.0):
   character.png
 
-PilzAdam (WTFPL):
+PilzAdam (CC BY-SA 3.0):
   default_jungleleaves.png
   default_junglesapling.png
   default_obsidian_glass.png
@@ -77,10 +67,10 @@ PilzAdam (WTFPL):
   default_mineral_gold.png
   default_snowball.png
 
-jojoa1997 (WTFPL):
+jojoa1997 (CC BY-SA 3.0):
   default_obsidian.png
 
-InfinityProject (WTFPL):
+InfinityProject (CC BY-SA 3.0):
   default_mineral_diamond.png
 
 Splizard (CC BY-SA 3.0):
@@ -156,13 +146,12 @@ sofar (CC BY-SA 3.0):
   default_aspen_tree
   default_aspen_tree_top, derived from default_pine_tree_top (by paramat)
   default_aspen_wood, derived from default_pine_wood (by paramat)
-
-sofar (WTFPL):
   default_gravel.png -- Derived from Gambit's PixelBOX texture pack light gravel
 
 Neuromancer (CC BY-SA 2.0):
   default_cobble.png, based on texture by Brane praefect
   default_mossycobble.png, based on texture by Brane praefect
+
 Neuromancer (CC BY-SA 3.0):
   default_dirt.png
   default_furnace_*.png
@@ -176,7 +165,7 @@ donat-b (CC BY-SA 3.0):
   default_junglewood.png
   default_wood.png
 
-Gambit (WTFPL):
+Gambit (CC BY-SA 3.0):
   default_bronze_ingot.png
   default_copper_ingot.png
   default_copper_lump.png
@@ -191,7 +180,7 @@ Gambit (WTFPL):
   default_sign_wall_wood.png
   default_flint.png
 
-asl97 (WTFPL):
+asl97 (CC BY-SA 3.0):
   default_ice.png
 
 KevDoy (CC BY-SA 3.0)
@@ -202,7 +191,7 @@ Glass breaking sounds (CC BY 3.0):
   2: http://www.freesound.org/people/Tomlija/sounds/97669/
   3: http://www.freesound.org/people/lsprice/sounds/88808/
 
-Mito551 (sounds) (CC BY-SA):
+Mito551 (sounds) (CC BY-SA 3.0):
   default_dig_choppy.ogg
   default_dig_cracky.ogg
   default_dig_crumbly.1.ogg

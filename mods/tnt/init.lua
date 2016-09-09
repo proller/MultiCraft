@@ -1,13 +1,10 @@
 tnt = {}
---[[
 
 -- Default to enabled when in singleplayer
 local enable_tnt = minetest.setting_getbool("enable_tnt")
 if enable_tnt == nil then
 	enable_tnt = minetest.is_singleplayer()
 end
-
-]]
 
 tnt.radius_max = tonumber(core.setting_get("tnt_radius_max") or 25)
 tnt.time_max = tonumber(core.setting_get("tnt_time_max") or 3)
@@ -54,7 +51,7 @@ end
 local function eject_drops(drops, pos, radius)
 	local drop_pos = vector.new(pos)
 	for _, item in pairs(drops) do
-		local count = item:get_count()
+		local count = math.min(item:get_count(), item:get_stack_max())
 		while count > 0 do
 			local take = math.max(1,math.min(radius * radius,
 					count,
@@ -531,7 +528,7 @@ end
 function tnt.boom(pos, def)
 	minetest.sound_play("tnt_explode", {pos = pos, gain = 1.5, max_hear_distance = 2*64})
 	minetest.set_node(pos, {name = "tnt:boom"})
-	local drops, radius = tnt_explode(pos, def.radius, def.ignore_protection,
+	local drops, radius = tnt_explode(pos, def, def.radius, def.ignore_protection,
 			def.ignore_on_blast)
 	-- append entity drops
 	local damage_radius = (radius / def.radius) * def.damage_radius
@@ -676,6 +673,7 @@ if enable_tnt then
 	})
 
 	minetest.register_abm({
+		label = "TNT ignition",
 		nodenames = {"group:tnt", "tnt:gunpowder"},
 		neighbors = {"fire:basic_flame", "default:lava_source", "default:lava_flowing"},
 		interval = 4,

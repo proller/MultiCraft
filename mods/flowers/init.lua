@@ -117,6 +117,7 @@ function flowers.flower_spread(pos, node)
 end
 
 minetest.register_abm({
+	label = "Flower spread",
 	nodenames = {"group:flora"},
 	neighbors = {"default:dirt_with_grass", "default:dirt_with_dry_grass",
 		"default:desert_sand"},
@@ -174,6 +175,7 @@ minetest.register_node("flowers:mushroom_brown", {
 -- Mushroom spread and death
 
 minetest.register_abm({
+	label = "Mushroom spread",
 	nodenames = {"flowers:mushroom_brown", "flowers:mushroom_red"},
 	interval = 11,
 	chance = 50,
@@ -217,6 +219,8 @@ minetest.register_alias("flowers:mushroom_spores_brown", "flowers:mushroom_brown
 minetest.register_alias("flowers:mushroom_spores_red", "flowers:mushroom_red")
 minetest.register_alias("flowers:mushroom_fertile_brown", "flowers:mushroom_brown")
 minetest.register_alias("flowers:mushroom_fertile_red", "flowers:mushroom_red")
+minetest.register_alias("mushroom:brown_natural", "flowers:mushroom_brown")
+minetest.register_alias("mushroom:red_natural", "flowers:mushroom_red")
 
 
 --
@@ -254,16 +258,20 @@ minetest.register_node("flowers:waterlily", {
 		local def = minetest.registered_nodes[node]
 		local player_name = placer:get_player_name()
 
-		if def and def.liquidtype == "source" and minetest.get_item_group(node, "water") > 0 then
+		if def and def.liquidtype == "source" and
+				minetest.get_item_group(node, "water") > 0 then
 			if not minetest.is_protected(pos, player_name) then
-				minetest.set_node(pos, {name = "flowers:waterlily", param2 = math.random(0, 3)})
+				minetest.set_node(pos, {name = "flowers:waterlily",
+					param2 = math.random(0, 3)})
+				if not minetest.setting_getbool("creative_mode") then
+					itemstack:take_item()
+				end
 			else
-				minetest.chat_send_player(player_name, "This area is protected")
-			end
-			if not minetest.setting_getbool("creative_mode") then
-				itemstack:take_item()
+				minetest.chat_send_player(player_name, "Node is protected")
+				minetest.record_protection_violation(pos, player_name)
 			end
 		end
+
 		return itemstack
 	end
 })
