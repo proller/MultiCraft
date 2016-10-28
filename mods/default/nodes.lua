@@ -47,6 +47,7 @@ default:dirt_with_snow
 
 default:sand
 default:desert_sand
+default:silver_sand
 
 default:gravel
 
@@ -110,8 +111,8 @@ default:mese
 default:stone_with_diamond
 default:diamondblock
 
-Plantlife (non-cubic)
----------------------
+Plantlife
+---------
 
 default:cactus
 default:papyrus
@@ -129,6 +130,13 @@ default:dry_grass_2
 default:dry_grass_3
 default:dry_grass_4
 default:dry_grass_5
+
+Corals
+------
+
+default:coral_brown
+default:coral_orange
+default:coral_skeleton
 
 Liquids
 -------
@@ -364,7 +372,7 @@ minetest.register_node("default:dirt_with_grass", {
 	tiles = {"default_grass.png", "default_dirt.png",
 		{name = "default_dirt.png^default_grass_side.png",
 			tileable_vertical = false}},
-	groups = {crumbly = 3, soil = 1, melt = 40, freeze = -5 },
+	groups = {crumbly = 3, soil = 1, spreading_dirt_type = 1, melt = 40, freeze = -5},
 	drop = 'default:dirt',
 	sounds = default.node_sound_dirt_defaults({
 		footstep = {name = "default_grass_footstep", gain = 0.25},
@@ -395,7 +403,7 @@ minetest.register_node("default:dirt_with_dry_grass", {
 		"default_dirt.png",
 		{name = "default_dirt.png^default_dry_grass_side.png",
 			tileable_vertical = false}},
-	groups = {crumbly = 3, soil = 1, melt = 50, freeze = -5},
+	groups = {crumbly = 3, soil = 1, spreading_dirt_type = 1, melt = 50, freeze = -5},
 	drop = 'default:dirt',
 	sounds = default.node_sound_dirt_defaults({
 		footstep = {name = "default_grass_footstep", gain = 0.4},
@@ -410,7 +418,7 @@ minetest.register_node("default:dirt_with_snow", {
 	tiles = {"default_snow.png", "default_dirt.png",
 		{name = "default_dirt.png^default_snow_side.png",
 			tileable_vertical = false}},
-	groups = {crumbly = 3, soil = 1, slippery = 70, melt = 2},
+	groups = {crumbly = 3, soil = 1, spreading_dirt_type = 1, slippery = 70, melt = 2},
 	drop = 'default:dirt',
 	sounds = default.node_sound_dirt_defaults({
 		footstep = {name = "default_snow_footstep", gain = 0.15},
@@ -436,7 +444,7 @@ minetest.register_node("default:sand", {
 	sounds = default.node_sound_sand_defaults(),
 
 	is_ground_content = true,
-	groups = {crumbly=3, falling_node=1, sand=1, liquid_drop=flowing_sand_liquid_drop, weight=2000},
+	groups = {crumbly = 3, falling_node = 1, sand = 1, liquid_drop = flowing_sand_liquid_drop, weight = 2000},
 	leveled = flowing_sand_leveled,
 	liquidtype = flowing_sand_type,
 	paramtype2 = flowing_sand_paramtype2,
@@ -454,7 +462,14 @@ minetest.register_node("default:desert_sand", {
 	liquidtype = flowing_sand_type,
 	paramtype2 = flowing_sand_paramtype2,
 	drowning = 1,
-	groups = {crumbly=3, falling_node=1, sand=1, liquid_drop=flowing_sand_liquid_drop, weight=2000},
+	groups = {crumbly = 3, falling_node = 1, sand = 1, liquid_drop = flowing_sand_liquid_drop, weight = 2000},
+})
+
+minetest.register_node("default:silver_sand", {
+	description = "Silver Sand",
+	tiles = {"default_silver_sand.png"},
+	groups = {crumbly = 3, falling_node = 1, sand = 1},
+	sounds = default.node_sound_sand_defaults(),
 })
 
 
@@ -1026,7 +1041,7 @@ minetest.register_node("default:steelblock", {
 	tiles = {"default_steel_block.png"},
 	is_ground_content = false,
 	groups = {cracky = 1, level = 2},
-	sounds = default.node_sound_stone_defaults(),
+	sounds = default.node_sound_metal_defaults(),
 })
 
 
@@ -1043,7 +1058,7 @@ minetest.register_node("default:copperblock", {
 	tiles = {"default_copper_block.png"},
 	is_ground_content = false,
 	groups = {cracky = 1, level = 2},
-	sounds = default.node_sound_stone_defaults(),
+	sounds = default.node_sound_metal_defaults(),
 })
 
 minetest.register_node("default:bronzeblock", {
@@ -1051,7 +1066,7 @@ minetest.register_node("default:bronzeblock", {
 	tiles = {"default_bronze_block.png"},
 	is_ground_content = false,
 	groups = {cracky = 1, level = 2},
-	sounds = default.node_sound_stone_defaults(),
+	sounds = default.node_sound_metal_defaults(),
 })
 
 
@@ -1088,7 +1103,7 @@ minetest.register_node("default:goldblock", {
 	tiles = {"default_gold_block.png"},
 	is_ground_content = false,
 	groups = {cracky = 1},
-	sounds = default.node_sound_stone_defaults(),
+	sounds = default.node_sound_metal_defaults(),
 })
 
 
@@ -1176,8 +1191,8 @@ minetest.register_node("default:junglegrass", {
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
-	groups = {snappy = 3, flora = 1, attached_node = 1, grass = 1,
-		dig_immediate = 3, drop_by_liquid = 1, melt = 50, },
+	groups = {snappy = 3, flora = 1, attached_node = 1, grass = 1, flammable = 1
+		, dig_immediate = 3, drop_by_liquid = 1, melt = 50, },
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -1199,8 +1214,8 @@ minetest.register_node("default:grass_1", {
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
-	groups = {snappy = 3, flora = 1, attached_node = 1, grass = 1, 
-		dig_immediate = 3, drop_by_liquid = 1, melt = 40, },
+	groups = {snappy = 3, flora = 1, attached_node = 1, grass = 1, flammable = 1
+		, dig_immediate = 3, drop_by_liquid = 1, melt = 40, },
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -1231,8 +1246,8 @@ for i = 2, 5 do
 		buildable_to = true,
 		drop = "default:grass_1",
 		groups = {snappy = 3, flora = 1, attached_node = 1,
-			not_in_creative_inventory = 1, grass = 1,
-			dig_immediate = 3, drop_by_liquid = 1, melt = 40, },
+			not_in_creative_inventory = 1, grass = 1, flammable = 1
+			, dig_immediate = 3, drop_by_liquid = 1, melt = 40, },
 		sounds = default.node_sound_leaves_defaults(),
 		selection_box = {
 			type = "fixed",
@@ -1295,6 +1310,35 @@ for i = 2, 5 do
 		},
 	})
 end
+
+
+--
+-- Corals
+--
+
+minetest.register_node("default:coral_brown", {
+	description = "Brown Coral",
+	tiles = {"default_coral_brown.png"},
+	groups = {cracky = 3},
+	drop = "default:coral_skeleton",
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("default:coral_orange", {
+	description = "Orange Coral",
+	tiles = {"default_coral_orange.png"},
+	groups = {cracky = 3},
+	drop = "default:coral_skeleton",
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("default:coral_skeleton", {
+	description = "Coral Skeleton",
+	tiles = {"default_coral_skeleton.png"},
+	groups = {cracky = 3},
+	sounds = default.node_sound_stone_defaults(),
+})
+
 
 --
 -- Liquids
@@ -1945,7 +1989,7 @@ register_sign("wood", "Wooden", {
 })
 
 register_sign("steel", "Steel", {
-	sounds = default.node_sound_defaults(),
+	sounds = default.node_sound_metal_defaults(),
 	groups = {cracky = 2, attached_node = 1}
 })
 
@@ -1991,7 +2035,7 @@ minetest.register_node("default:ladder_steel", {
 		--wall_side = = <default>
 	},
 	groups = {cracky = 2},
-	sounds = default.node_sound_stone_defaults(),
+	sounds = default.node_sound_metal_defaults(),
 })
 
 default.register_fence("default:fence_wood", {

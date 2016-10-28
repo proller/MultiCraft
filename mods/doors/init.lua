@@ -366,7 +366,7 @@ function doors.register(name, def)
 		minetest.remove_node({x = pos.x, y = pos.y + 1, z = pos.z})
 		nodeupdate({x = pos.x, y = pos.y + 1, z = pos.z})
 	end
-	def.on_rotate = screwdriver and screwdriver.rotate_simple or false
+	def.on_rotate = false
 
 	if def.protected then
 		def.can_dig = can_dig_door
@@ -422,7 +422,7 @@ doors.register("door_steel", {
 		inventory_image = "doors_item_steel.png",
 		protected = true,
 		groups = {cracky = 1, level = 2},
-		sounds = default.node_sound_stone_defaults(),
+		sounds = default.node_sound_metal_defaults(),
 		sound_open = "doors_steel_door_open",
 		sound_close = "doors_steel_door_close",
 		recipe = {
@@ -621,7 +621,7 @@ doors.register_trapdoor("doors:trapdoor_steel", {
 	tile_front = "doors_trapdoor_steel.png",
 	tile_side = "doors_trapdoor_steel_side.png",
 	protected = true,
-	sounds = default.node_sound_stone_defaults(),
+	sounds = default.node_sound_metal_defaults(),
 	sound_open = "doors_steel_door_open",
 	sound_close = "doors_steel_door_close",
 	groups = {cracky = 1, level = 2, door = 1},

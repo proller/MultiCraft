@@ -111,6 +111,7 @@ paramat (CC BY-SA 3.0):
   default_grass.png
   default_grass_side.png
   default_mese_block.png
+  default_silver_sand.png
 
 brunob.santos (CC BY-SA 4.0):
   default_desert_cobble.png
@@ -186,10 +187,24 @@ asl97 (CC BY-SA 3.0):
 KevDoy (CC BY-SA 3.0)
   heart.png
 
+Pithydon (CC BY-SA 3.0)
+  default_coral_brown.png
+  default_coral_orange.png
+  default_coral_skeleton.png
+
+Ferk (CC0 1.0)
+  default_item_smoke.png
+  default_item_smoke.ogg, based on sound by http://opengameart.org/users/bart
+
 Glass breaking sounds (CC BY 3.0):
   1: http://www.freesound.org/people/cmusounddesign/sounds/71947/
   2: http://www.freesound.org/people/Tomlija/sounds/97669/
   3: http://www.freesound.org/people/lsprice/sounds/88808/
+
+sonictechtonic (CC BY 3.0):
+https://www.freesound.org/people/sonictechtonic/sounds/241872/
+  player_damage.ogg
+  player_falling_damage.ogg
 
 Mito551 (sounds) (CC BY-SA 3.0):
   default_dig_choppy.ogg
@@ -225,3 +240,14 @@ Mito551 (sounds) (CC BY-SA 3.0):
   default_dirt_footstep.1.ogg
   default_dirt_footstep.2.ogg
   default_glass_footstep.ogg
+
+Metal sounds:
+  default_dig_metal.ogg - yadronoff - CC-BY-3.0
+  - https://www.freesound.org/people/yadronoff/sounds/320397/
+  default_dug_metal.*.ogg - Iwan Gabovitch - qubodup - CC0
+  - http://opengameart.org/users/qubodup
+  default_metal_footstep.*.ogg - Ottomaani138 - CC0
+  - https://www.freesound.org/people/Ottomaani138/sounds/232692/
+  default_place_node_metal.*.ogg - Ogrebane - CC0
+  - http://opengameart.org/content/wood-and-metal-sound-effects-volume-2
+
