@@ -37,3 +37,9 @@
 [submodule "mods/boost_cart"]
 	path = mods/boost_cart
 	url = https://github.com/tenplus1/boost_cart.git
+[submodule "mods/technic"]
+	path = mods/technic
+	url = https://github.com/minetest-technic/technic.git
+[submodule "mods/pipeworks"]
+	path = mods/pipeworks
+	url = https://github.com/minetest-mods/pipeworks.git
