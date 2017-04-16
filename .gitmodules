@@ -43,3 +43,6 @@
 [submodule "mods/pipeworks"]
 	path = mods/pipeworks
 	url = https://github.com/minetest-mods/pipeworks.git
+[submodule "mods/pbj_pup"]
+	path = mods/pbj_pup
+	url = https://github.com/tenplus1/pbj_pup.git
